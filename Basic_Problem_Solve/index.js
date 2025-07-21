@@ -175,3 +175,33 @@ function twoSum(nums, target) {
 console.log(`twoSum:`, twoSum([2, 7, 11, 15], 9)); // [0, 1]
 console.log(`twoSum:`, twoSum([3, 2, 4], 6)); // [1, 2]
 console.log(`twoSum:`, twoSum([3, 3], 6)); // [0, 1]
+
+
+// You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+
+// You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+function addTwoNumbers(l1, l2) {
+  let dummyHead = { val: 0, next: null };
+  let current = dummyHead;
+  let carry = 0;
+
+  while (l1 || l2 || carry) {
+    const val1 = l1 ? l1.val : 0;
+    const val2 = l2 ? l2.val : 0;
+
+    const sum = val1 + val2 + carry;
+    carry = Math.floor(sum / 10);
+    current.next = { val: sum % 10, next: null };
+    current = current.next;
+
+    if (l1) l1 = l1.next;
+    if (l2) l2 = l2.next;
+  }
+
+  return dummyHead.next;
+}
+// Example usage:
+const l1 = { val: 2, next: { val: 4, next: { val: 3, next: null } } }; // Represents 342
+const l2 = { val: 5, next: { val: 6, next: { val: 4, next: null } } }; // Represents 465
+const result = addTwoNumbers(l1, l2); // Should return a linked list representing
