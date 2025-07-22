@@ -214,13 +214,106 @@ console.log(
 function getUniqueValues(arr) {
   if (!Array.isArray(arr)) return "Please provide a valid array";
 
+  if (arr.length === 0) return "Array is empty";
+
+  // using filter method
+  // const uniqueValues = arr.filter(
+  //   (value, index, self) => self.indexOf(value) === index
+  // );
+  // if (uniqueValues.length === 0) {
+  //   return "No unique values found";
+  // } else {
+  //   return uniqueValues;
+  // }
+
+  // Alternative method using for loop
+
   const uniqueValues = [];
   for (let i = 0; i < arr.length; i++) {
     if (!uniqueValues.includes(arr[i])) {
       uniqueValues.push(arr[i]);
     }
   }
-  return uniqueValues;
+  if (uniqueValues.length === 0) {
+    return "No unique values found";
+  } else {
+    return uniqueValues;
+  }
 }
 
 console.log(`getUniqueValues:`, getUniqueValues([1, 2, 2, 3, 4, 4, 5])); // [1, 2, 3, 4, 5]
+
+// TODO:✅ একটি অবজেক্ট থেকে total value যোগ করো
+
+function sumObjectValues(obj) {
+  if (typeof obj !== "object" || obj === null)
+    return "Please provide a valid object";
+
+  if (Object.keys(obj).length === 0) return "Object is empty";
+  // Using Object.values and reduce method
+  const sum = Object.values(obj).reduce((acc, value) => {
+    if (typeof value === "number") {
+      return acc + value;
+    }
+    return acc;
+  }, 0);
+  return sum;
+
+  // Alternative method using for...in loop
+  // let sum = 0;
+  // for (let key in obj) {
+  //   if (typeof obj[key] === "number") {
+  //     sum += obj[key];
+  //   }
+  // }
+  // return sum;
+}
+console.log(`sumObjectValues:`, sumObjectValues({ a: 1, b: 2, c: 3 })); // 6
+console.log(`sumObjectValues:`, sumObjectValues({ x: 10, y: 20, z: 30 })); // 60
+
+// TODO:✅ দুইটি অ্যারে মিলে আছে কি না চেক করো
+
+function arraysAreEqual(arr1, arr2) {
+  if (!Array.isArray(arr1) || !Array.isArray(arr2))
+    return "Please provide valid arrays";
+
+  if (arr1.length !== arr2.length) return false;
+
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) return false;
+  }
+  return true;
+}
+console.log(`arraysAreEqual:`, arraysAreEqual([1, 2, 3], [1, 2, 3])); // true
+console.log(`arraysAreEqual:`, arraysAreEqual([1, 2, 3], [1, 2, 4])); // false
+
+// TODO:✅ একটি স্ট্রিংয়ের মধ্যে সবচেয়ে বেশি ব্যবহৃত ক্যারেক্টার খুঁজে বের করো;
+
+function mostFrequentCharacter(str) {
+  if (typeof str !== "string") return "Please provide a valid string";
+
+  const charCount = {};
+  let maxCount = 0;
+  let mostFrequentChar = "";
+
+  for (let char of str) {
+    // console.log(`Processing character:`, char);
+    if (charCount[char]) {
+      charCount[char]++;
+    } else {
+      charCount[char] = 1;
+    }
+
+    if (charCount[char] > maxCount) {
+      maxCount = charCount[char];
+      mostFrequentChar = char;
+    }
+  }
+
+  return mostFrequentChar;
+}
+console.log(
+  `mostFrequentCharacter:`,
+  mostFrequentCharacter("hello world")
+); // "l"
+// console.log(`mostFrequentCharacter:`, mostFrequentCharacter("javascript")); // "a
