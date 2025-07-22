@@ -108,25 +108,24 @@ function countVowels(name) {
   const vowels = "aeiouAEIOU";
   let count = 0;
 
-//   for (let i = 0; i < name.length; i++) {
-//     if (vowels.includes(name[i])) {
-//       count++;
-//     }F
-//   }
+  //   for (let i = 0; i < name.length; i++) {
+  //     if (vowels.includes(name[i])) {
+  //       count++;
+  //     }F
+  //   }
   // Alternative method using for...of loop
-    for (let char of name) {
-      if (vowels.includes(char)) {
-        count++;
-      }
+  for (let char of name) {
+    if (vowels.includes(char)) {
+      count++;
     }
+  }
   return count;
 }
 
 // console.log(`countVowels:`, countVowels("Shakib Al Hasan")); // 5
 // console.log(`countVowels:`, countVowels("Hello World")); // 3
 
-// TODO:✅ একটি সংখ্যা রিভার্স করো (উদাহরণ: 123 → 321)
-// :✅ Fibonacci সিরিজ প্রিন্ট করো (n পর্যন্ত)
+// TODO: :✅ Fibonacci সিরিজ প্রিন্ট করো (n পর্যন্ত)
 
 function fibonacci(n) {
   if (n <= 0) return [];
@@ -152,155 +151,76 @@ function reverseNumber(num) {
 console.log(`reverseNumber:`, reverseNumber(123)); // 321
 console.log(`reverseNumber:`, reverseNumber(4567)); // 7654
 
-// LeetCode Problem: Two Sum
-/*TODO: Two Sum 
-Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+//  ধাপ ২: অ্যারে ও অবজেক্ট
+// Intermediate Level Problem List:
 
-You may assume that each input would have exactly one solution, and you may not use the same element twice.
+// TODO: ✅ একটি অ্যারে থেকে সর্বোচ্চ সংখ্যা বের করো
+function findMax(arr) {
+  if (!Array.isArray(arr) || arr.length === 0)
+    return "Please provide a valid array";
+  // return Math.max(...arr);
+  let max = arr[0];
 
-You can return the answer in any order.
-*/ 
-
-function twoSum(nums, target) {
-  const numMap = new Map();
-  for (let i = 0; i < nums.length; i++) {
-    const complement = target - nums[i];
-    if (numMap.has(complement)) {
-      return [numMap.get(complement), i];
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] > max) {
+      max = arr[i];
     }
-    numMap.set(nums[i], i);
   }
-  return [];
-}
-// Example usage:
-console.log(`twoSum:`, twoSum([2, 7, 11, 15], 9)); // [0, 1]
-console.log(`twoSum:`, twoSum([3, 2, 4], 6)); // [1, 2]
-console.log(`twoSum:`, twoSum([3, 3], 6)); // [0, 1]
-
-// LeetCode Problem: Add Two Numbers
-
-//TODO: Add Two Numbers
-// You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
-
-// You may assume the two numbers do not contain any leading zero, except the number 0 itself.
-
-/**
- * Definition for singly-linked list.
- * function ListNode(val, next) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.next = (next===undefined ? null : next)
- * }
- */
-
-/**
- * Constraints:
-
-The number of nodes in each linked list is in the range [1, 100].
-0 <= Node.val <= 9
-It is guaranteed that the list represents a number that does not have leading zeros.*/ 
-
-// [] is not valid value for the expected return type ListNode
-
-function ListNode(val, next) {
-  this.val = (val === undefined ? 0 : val);
-  this.next = (next === undefined ? null : next);
+  return max;
 }
 
-function addTwoNumbers(l1, l2) {
-  let dummyHead = new ListNode(0);
-  let p = l1, q = l2, current = dummyHead;
-  let carry = 0;
+console.log(`findMax:`, findMax([1, 2, 3, 4, 5])); // 5
+console.log(`findMax:`, findMax([10, 20, 30, 40, 50])); // 50
 
-  while (p !== null || q !== null) {
-    const x = p !== null ? p.val : 0;
-    const y = q !== null ? q.val : 0;
-    const sum = carry + x + y;
-    carry = Math.floor(sum / 10);
-    current.next = new ListNode(sum % 10);
-    current = current.next;
+// TODO:✅ একটি অ্যারে থেকে সব নেগেটিভ নাম্বার বাদ দাও;
 
-    if (p !== null) p = p.next;
-    if (q !== null) q = q.next;
+function removeNegativeNumbers(arr) {
+  if (!Array.isArray(arr)) return "Please provide a valid array";
+
+  if (arr.length === 0) return "Array is empty";
+
+  // filter method
+  /** 
+  const positiveNumbers = arr.filter((num) => num >= 0);
+  if (positiveNumbers.length === 0) {
+    return "No positive numbers found";
+  } else {
+    return positiveNumbers;
   }
+   */
 
-  if (carry > 0) {
-    current.next = new ListNode(carry);
-  }
+  // Alternative method using for loop
 
-  return dummyHead.next;
-}
-// Example usage:
-// Assuming ListNode is defined as per the problem statement
-
-// Helper function to create a linked list from an array
-function createLinkedList(arr) {
-  let dummyHead = new ListNode(0);
-  let current = dummyHead;
-  for (let val of arr) {
-    current.next = new ListNode(val);
-    current = current.next;
-  }
-  return dummyHead.next;
-}
-// // Helper function to convert a linked list to an array
-function linkedListToArray(head) {
-  let arr = [];
-  while (head !== null) {
-    arr.push(head.val);
-    head = head.next;
-  }
-  return arr;
-}
-// Example usage:
-const l1 = createLinkedList([2, 4, 3]);
-const l2 = createLinkedList([5, 6, 4]);
-const result = addTwoNumbers(l1 , l2);
-console.log(`addTwoNumbers:`, linkedListToArray(result)); // [7, 0, 8] which represents the number 807
-
-
-// LeetCode Problem: Longest Substring Without Repeating Characters
-// TODO:Longest Substring Without Repeating Characters
-
-/**
- * Example 1:
-
-Input: s = "abcabcbb"
-Output: 3
-Explanation: The answer is "abc", with the length of 3.
-Example 2:
-
-Input: s = "bbbbb"
-Output: 1
-Explanation: The answer is "b", with the length of 1.
-Example 3:
-
-Input: s = "pwwkew"
-Output: 3
-Explanation: The answer is "wke", with the length of 3.
-Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
- 
-
-Constraints:
-
-0 <= s.length <= 5 * 104
-s consists of English letters, digits, symbols and spaces.*/ 
-
-function lengthOfLongestSubstring(s) {
-  const charIndexMap = new Map();
-  let maxLength = 0;
-  let start = 0;
-
-  for (let i = 0; i < s.length; i++) {
-    if (charIndexMap.has(s[i]) && charIndexMap.get(s[i]) >= start) {
-      start = charIndexMap.get(s[i]) + 1;
+  const positiveNumbers = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] >= 0) {
+      positiveNumbers.push(arr[i]);
     }
-    charIndexMap.set(s[i], i);
-    maxLength = Math.max(maxLength, i - start + 1);
   }
-
-  return maxLength;
+  if (positiveNumbers.length === 0) {
+    return "No positive numbers found";
+  } else {
+    return positiveNumbers;
+  }
 }
-// Example usage:
-console.log(`lengthOfLongestSubstring:`, lengthOfLongestSubstring("abcabcbb")); // 3
-console.log(`lengthOfLongestSubstring:`, lengthOfLongestSubstring("bbbbb")); // 1
-console.log(`lengthOfLongestSubstring:`, lengthOfLongestSubstring("pwwkew")); // 3
+
+console.log(
+  `removeNegativeNumbers:`,
+  removeNegativeNumbers([-1, -3, 2, 6, -5])
+); // [2, 4]
+
+// TODO:✅ একটি অ্যারে থেকে ইউনিক ভ্যালুগুলো বের করো;
+
+function getUniqueValues(arr) {
+  if (!Array.isArray(arr)) return "Please provide a valid array";
+
+  const uniqueValues = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (!uniqueValues.includes(arr[i])) {
+      uniqueValues.push(arr[i]);
+    }
+  }
+  return uniqueValues;
+}
+
+console.log(`getUniqueValues:`, getUniqueValues([1, 2, 2, 3, 4, 4, 5])); // [1, 2, 3, 4, 5]
