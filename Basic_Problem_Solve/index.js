@@ -317,3 +317,30 @@ console.log(
   mostFrequentCharacter("hello world")
 ); // "l"
 // console.log(`mostFrequentCharacter:`, mostFrequentCharacter("javascript")); // "a
+
+
+
+
+// TODO: Find First Non-Repeating Character in a String
+
+function firstNonRepeatingCharacter(str) {
+  if (typeof str !== "string") return "Please provide a valid string";
+
+  const charCount = {};
+
+  for (let char of str) {
+    charCount[char] = (charCount[char] || 0) + 1;
+  }
+
+  for (let char of str) {
+    if (charCount[char] === 1) {
+      return char;
+    }
+  }
+
+  return null; // If no non-repeating character is found
+}
+console.log(`firstNonRepeatingCharacter:`, firstNonRepeatingCharacter("swiss")); // "w"
+console.log(`firstNonRepeatingCharacter:`, firstNonRepeatingCharacter("hello")); // // "h"
+
+
